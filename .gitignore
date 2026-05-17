@@ -9,5 +9,4 @@ _design_extract/
 .firebase/
 .firebaserc
 firebase-debug.log
-
-.vercel
+_tools_*.py
