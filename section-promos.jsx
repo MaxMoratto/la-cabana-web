@@ -1,4 +1,4 @@
-/* global React, Shot, Reveal, Arrow, Eyebrow */
+/* global React, Shot, Reveal, Arrow, Eyebrow, useStoreSlice, LaCabanaStore */
 const { useState: useStatePromo, useEffect: useEffectPromo } = React;
 
 /* ============================================================
@@ -95,17 +95,40 @@ const PROMOS = [
   },
 ];
 
+// Map store promo (title/subtitle/dates) → legacy shape used by the layout
+function normalizePromo(p, idx) {
+  return {
+    id: p.id || `p${idx}`,
+    season: p.dates || p.season || "",
+    title: p.title || "",
+    sub: p.subtitle || p.sub || "",
+    body: p.desc || p.body || "",
+    cta: p.cta || "Reservar",
+    atm: p.atm || ["clay", "fire", "fire", "flour", "flour", "cream"][idx % 6],
+    label: p.label || "",
+    ref: p.ref || `REF · ${String(idx + 1).padStart(2, "0")}`,
+    price: p.price || "",
+    badge: p.badge || "",
+    image: p.image || "",
+  };
+}
+
 function PromosSection({ onReserve }) {
+  const storePromos = useStoreSlice("promos", null);
+  const promosRaw = (storePromos && storePromos.length) ? storePromos : PROMOS;
+  const ALL_PROMOS = promosRaw.map(normalizePromo);
   const [active, setActive] = useStatePromo(0);
   const [auto, setAuto] = useStatePromo(true);
 
   useEffectPromo(() => {
-    if (!auto) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % PROMOS.length), 6500);
+    if (!auto || ALL_PROMOS.length < 2) return;
+    const id = setInterval(() => setActive((a) => (a + 1) % ALL_PROMOS.length), 6500);
     return () => clearInterval(id);
-  }, [auto]);
+  }, [auto, ALL_PROMOS.length]);
 
-  const p = PROMOS[active];
+  const activeIdx = Math.min(active, ALL_PROMOS.length - 1);
+  const p = ALL_PROMOS[activeIdx] || ALL_PROMOS[0];
+  if (!p) return null;
 
   return (
     <section id="promociones" className="section section--linen grain" style={{ overflow: "hidden" }}>
@@ -130,33 +153,47 @@ function PromosSection({ onReserve }) {
           alignItems: "stretch",
         }} className="promo-grid">
           <Reveal>
-            <Shot
-              atm={p.atm}
-              src={PROMO_IMAGES[p.id]}
-              ratio="4 / 5"
-              label={p.label}
-              ref0={p.ref}
-              style={{ width: "100%", height: "100%", minHeight: 500 }}
-            >
-              <div style={{
-                position: "absolute",
-                top: 18, left: 18,
-                display: "flex", gap: 8,
-                zIndex: 3,
-              }}>
-                <span style={{
-                  fontFamily: "var(--mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  background: "oklch(0.30 0.04 40 / 0.85)",
-                  color: "var(--ambar-glow)",
-                  padding: "6px 10px",
-                  borderRadius: 999,
-                  backdropFilter: "blur(6px)",
-                }}>● {p.badge}</span>
-              </div>
-            </Shot>
+            {(() => {
+              const img = LaCabanaStore.resolveImage(p.image || PROMO_IMAGES[p.id]);
+              const Badge = p.badge ? (
+                <div style={{
+                  position: "absolute",
+                  top: 18, left: 18,
+                  display: "flex", gap: 8,
+                  zIndex: 3,
+                }}>
+                  <span style={{
+                    fontFamily: "var(--mono)",
+                    fontSize: 10,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    background: "oklch(0.30 0.04 40 / 0.85)",
+                    color: "var(--ambar-glow)",
+                    padding: "6px 10px",
+                    borderRadius: 999,
+                    backdropFilter: "blur(6px)",
+                  }}>● {p.badge}</span>
+                </div>
+              ) : null;
+              return img ? (
+                <div role="img" aria-label={p.title} style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "4 / 5",
+                  minHeight: 500,
+                  backgroundImage: `url("${img}")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  borderRadius: 4,
+                }}>
+                  {Badge}
+                </div>
+              ) : (
+                <Shot atm={p.atm} ratio="4 / 5" style={{ width: "100%", height: "100%", minHeight: 500 }}>
+                  {Badge}
+                </Shot>
+              );
+            })()}
           </Reveal>
 
           <Reveal delay={120}>
@@ -223,18 +260,18 @@ function PromosSection({ onReserve }) {
         <div className="container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
             <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(0.22 0.025 40 / 0.55)" }}>
-              {String(active + 1).padStart(2, "0")} / {String(PROMOS.length).padStart(2, "0")}
+              {String(activeIdx + 1).padStart(2, "0")} / {String(ALL_PROMOS.length).padStart(2, "0")}
             </span>
             <div style={{ display: "flex", gap: 8 }}>
               <button
-                onClick={() => { setAuto(false); setActive((a) => (a - 1 + PROMOS.length) % PROMOS.length); }}
+                onClick={() => { setAuto(false); setActive((a) => (a - 1 + ALL_PROMOS.length) % ALL_PROMOS.length); }}
                 aria-label="Anterior"
                 style={{ width: 38, height: 38, borderRadius: 999, border: "1px solid oklch(0.22 0.025 40 / 0.22)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" strokeWidth="1.6" fill="none"><path d="M13 7 H1 M6 2 L1 7 L6 12" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </button>
               <button
-                onClick={() => { setAuto(false); setActive((a) => (a + 1) % PROMOS.length); }}
+                onClick={() => { setAuto(false); setActive((a) => (a + 1) % ALL_PROMOS.length); }}
                 aria-label="Siguiente"
                 style={{ width: 38, height: 38, borderRadius: 999, border: "1px solid oklch(0.22 0.025 40 / 0.22)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
               >
@@ -253,7 +290,9 @@ function PromosSection({ onReserve }) {
           scrollbarWidth: "none",
         }} className="promo-strip">
           <style>{`.promo-strip::-webkit-scrollbar { display: none; }`}</style>
-          {PROMOS.map((promo, i) => (
+          {ALL_PROMOS.map((promo, i) => {
+            const img = LaCabanaStore.resolveImage(promo.image || PROMO_IMAGES[promo.id]);
+            return (
             <button
               key={promo.id}
               onClick={() => { setAuto(false); setActive(i); }}
@@ -263,20 +302,30 @@ function PromosSection({ onReserve }) {
                 background: "transparent",
                 padding: 0,
                 scrollSnapAlign: "start",
-                opacity: i === active ? 1 : 0.55,
+                opacity: i === activeIdx ? 1 : 0.55,
                 transition: "opacity 0.3s ease, transform 0.3s ease",
-                transform: i === active ? "translateY(-4px)" : "none",
+                transform: i === activeIdx ? "translateY(-4px)" : "none",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = i === active ? "1" : "0.55")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = i === activeIdx ? "1" : "0.55")}
             >
-              <Shot atm={promo.atm} src={PROMO_IMAGES[promo.id]} ratio="4 / 3" label={promo.label} ref0={promo.ref} />
+              {img ? (
+                <div role="img" aria-label={promo.title} style={{
+                  aspectRatio: "4 / 3",
+                  backgroundImage: `url("${img}")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  borderRadius: 4,
+                }} />
+              ) : (
+                <Shot atm={promo.atm} ratio="4 / 3" />
+              )}
               <div style={{ paddingTop: 14 }}>
                 <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--terracota-soft)" }}>{promo.season}</div>
                 <div style={{ fontFamily: "var(--serif)", fontSize: 20, marginTop: 6, color: "var(--espresso)" }}>{promo.title}</div>
               </div>
             </button>
-          ))}
+          );})}
         </div>
       </div>
 

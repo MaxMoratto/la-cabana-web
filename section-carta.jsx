@@ -93,7 +93,11 @@ const MENU = {
 };
 
 function CartaSection() {
-  const [tab, setTab] = useStateMenu("desayunos");
+  const cats = useStoreSlice("menu.categories", null);
+  const categories = (cats && cats.length) ? cats : MENU_TABS.map(t => ({ ...t, items: MENU[t.id] || [] }));
+  const [tab, setTab] = useStateMenu(categories[0]?.id || "desayunos");
+  const activeCat = categories.find(c => c.id === tab) || categories[0];
+  const items = activeCat?.items || [];
 
   return (
     <section id="carta" className="section section--biscuit grain" style={{ overflow: "hidden" }}>
@@ -123,7 +127,7 @@ function CartaSection() {
             scrollbarWidth: "none",
           }} className="menu-tabs">
             <style>{`.menu-tabs::-webkit-scrollbar { display: none; }`}</style>
-            {MENU_TABS.map((t) => {
+            {categories.map((t) => {
               const isOn = t.id === tab;
               return (
                 <button
@@ -143,7 +147,7 @@ function CartaSection() {
                   onMouseEnter={(e) => { if (!isOn) e.currentTarget.style.color = "var(--crema)"; }}
                   onMouseLeave={(e) => { if (!isOn) e.currentTarget.style.color = "oklch(0.22 0.025 40 / 0.6)"; }}
                 >
-                  {t.label}
+                  {t.name || t.label}
                 </button>
               );
             })}
@@ -156,8 +160,13 @@ function CartaSection() {
           gridTemplateColumns: "1fr 1fr",
           gap: "clamp(20px, 4vw, 60px) clamp(28px, 5vw, 80px)",
         }} className="menu-grid">
-          {MENU[tab].map((dish, i) => (
-            <Reveal key={dish.name} delay={i * 60}>
+          {items.length === 0 && (
+            <div style={{ gridColumn: "1 / -1", padding: "60px 0", textAlign: "center", color: "oklch(0.22 0.025 40 / 0.5)", fontStyle: "italic" }}>
+              Esta sección del menú aún no tiene platillos. Agrégalos desde el admin.
+            </div>
+          )}
+          {items.map((dish, i) => (
+            <Reveal key={dish.id || dish.name} delay={i * 60}>
               <div style={{
                 paddingBottom: 26,
                 borderBottom: "1px dashed oklch(0.22 0.025 40 / 0.16)",

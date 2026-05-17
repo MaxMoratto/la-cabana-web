@@ -1,4 +1,4 @@
-/* global React, Shot, Reveal, Arrow, Eyebrow */
+/* global React, Shot, Reveal, Arrow, Eyebrow, LaCabanaStore */
 const { useState: useStateRes, useMemo: useMemoRes } = React;
 
 /* ============================================================
@@ -57,9 +57,11 @@ function ReservaSection({ onToast }) {
   };
 
   const whatsapp = () => {
+    const number = (LaCabanaStore.getPath("site.whatsapp") || "5215551157248").replace(/[^\d]/g, "");
     const msg = encodeURIComponent(
       `Hola, soy ${form.name || "(nombre)"}. Quisiera reservar para ${form.guests} personas el ${form.date} a las ${form.time}. ${form.occasion ? "Ocasión: " + form.occasion + ". " : ""}${form.area ? "Área: " + form.area + ". " : ""}${form.notes ? "Notas: " + form.notes : ""}`
     );
+    window.open(`https://wa.me/${number}?text=${msg}`, "_blank", "noopener");
     onToast && onToast("Abriendo WhatsApp con tu mensaje listo…");
   };
 

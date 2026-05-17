@@ -68,10 +68,12 @@ function Shot({ atm = "wood", src, title, label, ref0, ratio = "4 / 3", style = 
       <div className="shot__vignette"></div>
       {title && <div className="shot__title">{title}</div>}
       {children}
-      <div className="shot__label">
-        <span><span className="dot"></span>{label || "PLACEHOLDER"}</span>
-        <span>{ref0 || "REF · 01"}</span>
-      </div>
+      {label && (
+        <div className="shot__label">
+          <span><span className="dot"></span>{label}</span>
+          {ref0 && <span>{ref0}</span>}
+        </div>
+      )}
     </div>
   );
 }
@@ -178,7 +180,28 @@ function Toast({ message, onDone }) {
   );
 }
 
-Object.assign(window, { Logo, Shot, Reveal, Arrow, Eyebrow, Embers, Toast, PapelPicado });
+/* ---------- Store subscription hook (shared across sections) ---------- */
+function useStoreSlice(path, fallback) {
+  const [value, setValue] = useState(() => {
+    if (!window.LaCabanaStore) return fallback;
+    try {
+      const v = window.LaCabanaStore.getPath(path);
+      return (v == null || (Array.isArray(v) && v.length === 0)) ? fallback : v;
+    } catch { return fallback; }
+  });
+  useEffect(() => {
+    if (!window.LaCabanaStore) return;
+    return window.LaCabanaStore.subscribe(() => {
+      try {
+        const v = window.LaCabanaStore.getPath(path);
+        setValue((v == null || (Array.isArray(v) && v.length === 0)) ? fallback : v);
+      } catch { setValue(fallback); }
+    });
+  }, [path]);
+  return value;
+}
+
+Object.assign(window, { Logo, Shot, Reveal, Arrow, Eyebrow, Embers, Toast, PapelPicado, useStoreSlice });
 
 /* ---------- Papel Picado banner ---------- */
 function PapelPicado({

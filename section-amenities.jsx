@@ -1,4 +1,4 @@
-/* global React */
+/* global React, useStoreSlice, LaCabanaStore */
 
 /* ============================================================
    AMENITIES STRIP — Wood plank with icon row + WhatsApp CTA
@@ -23,6 +23,10 @@ function AmenityIcon({ kind }) {
 }
 
 function AmenityStrip() {
+  const site = useStoreSlice("site", {});
+  const phoneDisplay = site.phoneDisplay || "+52 55 5115 7248";
+  const whatsapp = (site.whatsapp || "5215551157248").replace(/[^\d]/g, "");
+  const waUrl = `https://wa.me/${whatsapp}?text=${encodeURIComponent("Hola, me interesa reservar una mesa en La Cabaña.")}`;
   return (
     <section style={{
       position: "relative",
@@ -71,12 +75,8 @@ function AmenityStrip() {
             </div>
           ))}
 
-          {/* WhatsApp CTA */}
-          <a href="#reservar" onClick={(e) => {
-            e.preventDefault();
-            const el = document.getElementById("reservar");
-            if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
-          }} style={{
+          {/* WhatsApp CTA — opens WhatsApp directly */}
+          <a href={waUrl} target="_blank" rel="noopener noreferrer" style={{
             display: "inline-flex",
             alignItems: "center",
             gap: 14,
@@ -99,7 +99,7 @@ function AmenityStrip() {
                 ¡Reserva ahora!
               </div>
               <div style={{ fontFamily: "var(--serif)", fontSize: 20, marginTop: 2 }}>
-                (55) 5115 7248
+                {phoneDisplay}
               </div>
             </div>
           </a>

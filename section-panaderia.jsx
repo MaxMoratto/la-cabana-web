@@ -1,19 +1,23 @@
-/* global React, Shot, Reveal, Arrow, Eyebrow */
+/* global React, Shot, Reveal, Arrow, Eyebrow, useStoreSlice, LaCabanaStore */
 
 /* ============================================================
    PANADERÍA ARTESANAL — Luxury bakery feature
    ============================================================ */
 
-const BREADS = [
-  { name: "Concha Premium",         note: "Vainilla de Papantla · cacao",          price: 38, atm: "flour", src: "images/conchas-artesanales.png", label: "FOTO · CONCHA · DETALLE COSTRA" },
-  { name: "Chocolatín Mexicano",    note: "Chocolate Oaxaqueño · mantequilla",     price: 52, atm: "wood",  src: "images/chocolatin-capas.png",    label: "FOTO · CHOCOLATÍN · CAPAS" },
-  { name: "Rol de Canela",          note: "Piloncillo · nuez de castilla",         price: 48, atm: "clay",  src: "images/rol-canela.png",          label: "FOTO · ROL CANELA · GLASEADO" },
-  { name: "Pan Rústico",            note: "Masa madre 36 hrs · corteza leñosa",    price: 95, atm: "wood",  src: "images/pan-rustico.png",         label: "FOTO · PAN RÚSTICO · CORTE" },
-  { name: "Cuerno de Hojaldre",     note: "104 capas · mantequilla francesa",      price: 62, atm: "flour", src: "images/cuerno-hojaldre.png",     label: "FOTO · CUERNO · LAMINADO" },
-  { name: "Pan de Elote",           note: "Elote tierno · queso fresco",            price: 45, atm: "cream", src: "images/pan-elote.png",           label: "FOTO · PAN DE ELOTE · MIGA" },
+const BREADS_FALLBACK = [
+  { id: "pan_1", name: "Concha Premium",      desc: "Vainilla de Papantla · cacao",          price: 38, image: "" },
+  { id: "pan_2", name: "Chocolatín Mexicano", desc: "Chocolate Oaxaqueño · mantequilla",     price: 52, image: "" },
+  { id: "pan_3", name: "Rol de Canela",       desc: "Piloncillo · nuez de castilla",         price: 48, image: "" },
+  { id: "pan_4", name: "Pan Rústico",         desc: "Masa madre 36 hrs · corteza leñosa",    price: 95, image: "" },
+  { id: "pan_5", name: "Cuerno de Hojaldre",  desc: "104 capas · mantequilla francesa",      price: 62, image: "" },
+  { id: "pan_6", name: "Pan de Elote",        desc: "Elote tierno · queso fresco",           price: 45, image: "" },
 ];
 
+// Cycle atmospheres for fallback styling
+const BAKERY_ATMS = ["flour", "wood", "clay", "wood", "flour", "cream"];
+
 function PanaderiaSection() {
+  const BREADS = useStoreSlice("panaderia", BREADS_FALLBACK);
   return (
     <section id="panaderia" className="section section--cream grain" style={{ overflow: "hidden", position: "relative" }}>
       {/* flour dust decoration */}
@@ -141,8 +145,11 @@ function PanaderiaSection() {
           gridTemplateColumns: "repeat(3, 1fr)",
           gap: 28,
         }} className="bread-grid">
-          {BREADS.map((b, i) => (
-            <Reveal key={b.name} delay={i * 80}>
+          {BREADS.map((b, i) => {
+            const img = LaCabanaStore.resolveImage(b.image || b.src);
+            const atm = b.atm || BAKERY_ATMS[i % BAKERY_ATMS.length];
+            return (
+            <Reveal key={b.id || b.name} delay={i * 80}>
               <article style={{
                 cursor: "pointer",
                 transition: "transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1)",
@@ -150,7 +157,17 @@ function PanaderiaSection() {
                 onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "none"; }}
               >
-                <Shot atm={b.atm} src={b.src} ratio="1 / 1" label={b.label} ref0={`BREAD · ${String(i + 1).padStart(2, "0")}`} />
+                {img ? (
+                  <div role="img" aria-label={b.name} style={{
+                    aspectRatio: "1 / 1",
+                    backgroundImage: `url("${img}")`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: 4,
+                  }} />
+                ) : (
+                  <Shot atm={atm} ratio="1 / 1" />
+                )}
                 <div style={{ paddingTop: 18, display: "grid", gridTemplateColumns: "1fr auto", gap: 10, alignItems: "baseline" }}>
                   <div>
                     <h4 style={{
@@ -163,7 +180,7 @@ function PanaderiaSection() {
                       {b.name}
                     </h4>
                     <div style={{ fontSize: 13, color: "oklch(0.30 0.02 40 / 0.7)", marginTop: 4 }}>
-                      {b.note}
+                      {b.desc || b.note}
                     </div>
                   </div>
                   <div style={{
@@ -177,7 +194,7 @@ function PanaderiaSection() {
                 </div>
               </article>
             </Reveal>
-          ))}
+          );})}
         </div>
 
         <Reveal>

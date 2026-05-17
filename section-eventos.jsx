@@ -1,16 +1,29 @@
-/* global React, Shot, Reveal, Arrow, Eyebrow */
+/* global React, Shot, Reveal, Arrow, Eyebrow, useStoreSlice */
 
 /* ============================================================
    EVENTOS — Música en vivo, área infantil, temporadas
    ============================================================ */
 
-const EVENTS = [
-  { day: "Vie", date: "16", title: "Trío Los del Valle", kind: "Música en vivo", time: "20:00 — 23:00", note: "Boleros y rancheras al fogón" },
-  { day: "Sáb", date: "17", title: "Mariachi de Cocula", kind: "Música en vivo", time: "14:00 — 17:00", note: "Buffet familiar de fin de semana" },
-  { day: "Dom", date: "18", title: "Cuenta-cuentos infantil", kind: "Área familiar", time: "12:00 — 14:00", note: "Leyendas mexicanas para niños" },
-  { day: "Mié", date: "21", title: "Cata de mezcal", kind: "Evento privado", time: "19:30 — 22:00", note: "5 destilados de Oaxaca · cupo 24" },
-  { day: "Sáb", date: "24", title: "Cumpleaños familiar", kind: "Reservas especiales", time: "Todo el día", note: "Decoración papel picado · pastel" },
+const EVENTS_FALLBACK = [
+  { id: "ev_1", day: "Viernes",   title: "Trío Los del Valle",      time: "20:00 — 23:00", desc: "Boleros y rancheras al fogón" },
+  { id: "ev_2", day: "Sábado",    title: "Mariachi de Cocula",      time: "14:00 — 17:00", desc: "Buffet familiar de fin de semana" },
+  { id: "ev_3", day: "Domingo",   title: "Cuenta-cuentos infantil", time: "12:00 — 14:00", desc: "Leyendas mexicanas para niños" },
+  { id: "ev_4", day: "Miércoles", title: "Cata de mezcal",          time: "19:30 — 22:00", desc: "5 destilados de Oaxaca · cupo 24" },
+  { id: "ev_5", day: "Sábado",    title: "Cumpleaños familiar",     time: "Todo el día",   desc: "Decoración papel picado · pastel" },
 ];
+
+// Map first 3 letters of day to short label
+function dayShort(d) {
+  const s = (d || "").trim().toLowerCase();
+  if (s.startsWith("lun")) return "Lun";
+  if (s.startsWith("mar")) return "Mar";
+  if (s.startsWith("mié") || s.startsWith("mie")) return "Mié";
+  if (s.startsWith("jue")) return "Jue";
+  if (s.startsWith("vie")) return "Vie";
+  if (s.startsWith("sáb") || s.startsWith("sab")) return "Sáb";
+  if (s.startsWith("dom")) return "Dom";
+  return (d || "").slice(0, 3);
+}
 
 const FEATURES = [
   {
@@ -45,6 +58,7 @@ function EventIcon({ kind, color = "currentColor" }) {
 }
 
 function EventosSection() {
+  const EVENTS = useStoreSlice("eventos", EVENTS_FALLBACK);
   return (
     <section id="eventos" className="section section--nogal wood wood--nogal grain" style={{ overflow: "hidden", position: "relative" }}>
       {/* texture */}
@@ -93,8 +107,13 @@ function EventosSection() {
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                {EVENTS.length === 0 && (
+                  <div style={{ padding: "40px 0", textAlign: "center", color: "oklch(0.94 0.03 80 / 0.55)", fontStyle: "italic" }}>
+                    No hay eventos esta semana. Agrega desde el admin.
+                  </div>
+                )}
                 {EVENTS.map((e, i) => (
-                  <div key={i} style={{
+                  <div key={e.id || i} style={{
                     display: "grid",
                     gridTemplateColumns: "auto 1fr auto",
                     gap: 20,
@@ -114,16 +133,16 @@ function EventosSection() {
                       display: "flex", flexDirection: "column",
                       alignItems: "center", justifyContent: "center",
                     }}>
-                      <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: "0.22em", color: "var(--terracota-soft)" }}>{e.day}</div>
-                      <div style={{ fontFamily: "var(--serif)", fontSize: 24, lineHeight: 1, marginTop: 4 }}>{e.date}</div>
+                      <div style={{ fontFamily: "var(--mono)", fontSize: 9.5, letterSpacing: "0.22em", color: "var(--terracota-soft)" }}>{dayShort(e.day)}</div>
+                      <div style={{ fontFamily: "var(--serif)", fontSize: 14, lineHeight: 1, marginTop: 6, color: "oklch(0.94 0.03 80 / 0.7)" }}>·</div>
                     </div>
 
                     <div>
                       <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "oklch(0.94 0.03 80 / 0.55)" }}>
-                        {e.kind} · {e.time}
+                        {e.day}{e.time ? ` · ${e.time}` : ""}
                       </div>
                       <div style={{ fontFamily: "var(--serif)", fontSize: 22, marginTop: 4 }}>{e.title}</div>
-                      <div style={{ fontSize: 13.5, color: "oklch(0.94 0.03 80 / 0.65)", marginTop: 4 }}>{e.note}</div>
+                      <div style={{ fontSize: 13.5, color: "oklch(0.94 0.03 80 / 0.65)", marginTop: 4 }}>{e.desc || e.note}</div>
                     </div>
 
                     <button style={{
