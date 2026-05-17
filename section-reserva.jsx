@@ -185,7 +185,7 @@ function ReservaSection({ onToast }) {
               {/* STEP 1 */}
               {step === 1 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-                  <Field label="Ocasión" error={errors.occasion}>
+                  <ResField label="Ocasión" error={errors.occasion}>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 8 }}>
                       {occasions.map((o) => (
                         <Chip key={o.id} active={form.occasion === o.id} onClick={() => update("occasion", o.id)}>
@@ -193,20 +193,20 @@ function ReservaSection({ onToast }) {
                         </Chip>
                       ))}
                     </div>
-                  </Field>
+                  </ResField>
 
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }} className="res-trio">
-                    <Field label="Fecha" error={errors.date}>
+                    <ResField label="Fecha" error={errors.date}>
                       <Input type="date" value={form.date} min={minDate} max={maxDate} onChange={(v) => update("date", v)} />
-                    </Field>
-                    <Field label="Horario" error={errors.time}>
+                    </ResField>
+                    <ResField label="Horario" error={errors.time}>
                       <Select value={form.time} onChange={(v) => update("time", v)} placeholder="Selecciona">
                         {times.map((t) => <option key={t} value={t}>{t}</option>)}
                       </Select>
-                    </Field>
-                    <Field label="Comensales" error={errors.guests}>
+                    </ResField>
+                    <ResField label="Comensales" error={errors.guests}>
                       <Stepper value={form.guests} min={1} max={20} onChange={(v) => update("guests", v)} />
-                    </Field>
+                    </ResField>
                   </div>
                 </div>
               )}
@@ -214,7 +214,7 @@ function ReservaSection({ onToast }) {
               {/* STEP 2 */}
               {step === 2 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
-                  <Field label="Área preferida (opcional)">
+                  <ResField label="Área preferida (opcional)">
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                       {areas.map((a) => (
                         <button key={a.id} type="button" onClick={() => update("area", a.id)}
@@ -236,18 +236,18 @@ function ReservaSection({ onToast }) {
                         </button>
                       ))}
                     </div>
-                  </Field>
+                  </ResField>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }} className="res-duo">
-                    <Field label="Nombre completo" error={errors.name}>
+                    <ResField label="Nombre completo" error={errors.name}>
                       <Input value={form.name} onChange={(v) => update("name", v)} placeholder="Ana López" />
-                    </Field>
-                    <Field label="Teléfono (WhatsApp)" error={errors.phone}>
+                    </ResField>
+                    <ResField label="Teléfono (WhatsApp)" error={errors.phone}>
                       <Input value={form.phone} onChange={(v) => update("phone", v.replace(/[^\d\s+()-]/g, ""))} placeholder="55 1234 5678" />
-                    </Field>
+                    </ResField>
                   </div>
-                  <Field label="Notas (alergias, cumpleaños, etc.)">
+                  <ResField label="Notas (alergias, cumpleaños, etc.)">
                     <Textarea value={form.notes} onChange={(v) => update("notes", v)} placeholder="Mesa cerca de la ventana, pastel sorpresa, etc." />
-                  </Field>
+                  </ResField>
                 </div>
               )}
 
@@ -383,7 +383,7 @@ function ReservaSection({ onToast }) {
 }
 
 /* ---------- Form atoms ---------- */
-function Field({ label, error, children }) {
+function ResField({ label, error, children }) {
   return (
     <label style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <span style={{
