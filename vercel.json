@@ -1,0 +1,22 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/admin", "destination": "/La Cabaña.html?admin=1" },
+    { "source": "/", "destination": "/La Cabaña.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.(jsx|js|css)$",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(images|uploads)/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ]
+}

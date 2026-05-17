@@ -1,0 +1,431 @@
+/* ============================================================
+   LA CABAÑA — Design tokens & global styles
+   ============================================================ */
+
+:root {
+  /* Paleta cálida mexicana */
+  --terracota:        oklch(0.58 0.13 38);
+  --terracota-soft:   oklch(0.68 0.10 40);
+  --terracota-deep:   oklch(0.46 0.13 35);
+
+  --beige:            oklch(0.87 0.04 75);
+  --crema:            oklch(0.94 0.03 80);
+  --crema-soft:       oklch(0.96 0.018 82);
+
+  --nogal:            oklch(0.40 0.06 45);
+  --nogal-deep:       oklch(0.30 0.05 42);
+
+  --olivo:            oklch(0.50 0.06 110);
+  --olivo-soft:       oklch(0.62 0.05 108);
+
+  --espresso:         oklch(0.22 0.025 40);
+  --rojo-quemado:     oklch(0.42 0.135 30);
+  --negro-mate:       oklch(0.16 0.012 50);
+  --negro-puro:       oklch(0.10 0.008 50);
+
+  --ambar:            oklch(0.78 0.13 70);
+  --ambar-glow:       oklch(0.85 0.15 78);
+
+  /* Tipografía */
+  --serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --sans:  "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --script:"Caveat", "Brush Script MT", cursive;
+  --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Espacios */
+  --maxw: 1320px;
+  --gutter: clamp(20px, 4vw, 56px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--negro-mate);
+  color: var(--crema);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--terracota); color: var(--crema); }
+
+/* ---------- Layout helpers ---------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--terracota-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--terracota-soft);
+  display: inline-block;
+}
+
+.display {
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.display em {
+  font-style: italic;
+  font-family: var(--serif);
+  color: var(--terracota-soft);
+}
+.script {
+  font-family: var(--script);
+  font-weight: 500;
+  color: var(--terracota-soft);
+}
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 999px;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+.btn--primary {
+  background: var(--terracota);
+  color: var(--crema);
+  box-shadow: 0 12px 32px -12px oklch(0.46 0.13 35 / 0.7);
+}
+.btn--primary:hover {
+  background: var(--terracota-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -14px oklch(0.46 0.13 35 / 0.85);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--crema);
+  border: 1px solid oklch(0.94 0.03 80 / 0.35);
+}
+.btn--ghost:hover {
+  background: oklch(0.94 0.03 80 / 0.08);
+  border-color: var(--crema);
+  transform: translateY(-2px);
+}
+.btn--dark {
+  background: var(--espresso);
+  color: var(--crema);
+}
+.btn--dark:hover { background: var(--negro-puro); }
+
+.btn--olive {
+  background: var(--olivo);
+  color: var(--crema);
+}
+.btn--olive:hover {
+  background: oklch(0.42 0.06 105);
+  transform: translateY(-2px);
+}
+.btn--outline-dark {
+  background: transparent;
+  color: var(--espresso);
+  border: 1.5px solid oklch(0.30 0.02 40 / 0.4);
+}
+.btn--outline-dark:hover {
+  background: var(--espresso);
+  color: var(--crema);
+  border-color: var(--espresso);
+  transform: translateY(-2px);
+}
+.btn .arrow {
+  width: 14px; height: 14px;
+  transition: transform 0.25s ease;
+}
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* ---------- Texturas ---------- */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.15 0 0 0 0 0.10 0 0 0 0 0.05 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- Wood texture (real photo + per-variant tint) ----------
+   Use as a className. The `linear-gradient` overlay tints the wood
+   image so each variant feels distinct. */
+.wood {
+  background-color: oklch(0.22 0.03 40);
+  background-image: url("images/wood-texture.png");
+  background-size: 480px auto;
+  background-repeat: repeat;
+}
+.wood--coffee {
+  background-image:
+    linear-gradient(oklch(0.26 0.04 40 / 0.55), oklch(0.22 0.035 40 / 0.55)),
+    url("images/wood-texture.png");
+  background-size: 100% 100%, 480px auto;
+  background-repeat: no-repeat, repeat;
+}
+.wood--nogal {
+  background-image:
+    linear-gradient(oklch(0.34 0.05 45 / 0.42), oklch(0.30 0.045 45 / 0.42)),
+    url("images/wood-texture.png");
+  background-size: 100% 100%, 480px auto;
+  background-repeat: no-repeat, repeat;
+}
+.wood--terracota {
+  background-image:
+    linear-gradient(oklch(0.46 0.13 35 / 0.50), oklch(0.40 0.12 32 / 0.50)),
+    url("images/wood-texture.png");
+  background-size: 100% 100%, 480px auto;
+  background-repeat: no-repeat, repeat;
+}
+.wood--olivo {
+  background-image:
+    linear-gradient(oklch(0.40 0.07 110 / 0.55), oklch(0.34 0.06 105 / 0.55)),
+    url("images/wood-texture.png");
+  background-size: 100% 100%, 480px auto;
+  background-repeat: no-repeat, repeat;
+}
+.wood--rojo {
+  background-image:
+    linear-gradient(oklch(0.40 0.13 30 / 0.55), oklch(0.34 0.12 28 / 0.55)),
+    url("images/wood-texture.png");
+  background-size: 100% 100%, 480px auto;
+  background-repeat: no-repeat, repeat;
+}
+.wood--espresso {
+  background-image:
+    linear-gradient(oklch(0.18 0.025 40 / 0.55), oklch(0.14 0.02 40 / 0.55)),
+    url("images/wood-texture.png");
+  background-size: 100% 100%, 480px auto;
+  background-repeat: no-repeat, repeat;
+}
+
+/* ---------- Placeholder cinematográfico ----------
+   Sustituye fotos reales. Conserva la atmósfera. */
+.shot {
+  position: relative;
+  overflow: hidden;
+  background: var(--espresso);
+  border-radius: 4px;
+  isolation: isolate;
+}
+.shot__bg {
+  position: absolute; inset: 0;
+  background: var(--bg, linear-gradient(135deg, var(--nogal), var(--espresso)));
+}
+.shot__vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, transparent 30%, oklch(0.10 0.008 50 / 0.55) 100%);
+  pointer-events: none;
+}
+.shot__glow {
+  position: absolute;
+  width: 50%; height: 50%;
+  top: 18%; left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, var(--ambar-glow) 0%, transparent 60%);
+  opacity: 0.35;
+  filter: blur(20px);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.shot__stripes {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    115deg,
+    oklch(0.94 0.03 80 / 0.04) 0 1px,
+    transparent 1px 22px
+  );
+  pointer-events: none;
+}
+.shot__label {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: oklch(0.94 0.03 80 / 0.7);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 2;
+}
+.shot__label .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--terracota);
+  display: inline-block;
+  margin-right: 8px;
+  box-shadow: 0 0 8px var(--terracota);
+}
+.shot__title {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 3vw, 36px);
+  color: oklch(0.94 0.03 80 / 0.55);
+  text-align: center;
+  z-index: 1;
+  text-wrap: balance;
+  padding: 0 24px;
+  pointer-events: none;
+}
+
+/* Atmósferas predefinidas */
+.atm-fire    { --bg: radial-gradient(at 60% 70%, oklch(0.55 0.18 45) 0%, oklch(0.30 0.10 30) 35%, oklch(0.14 0.02 35) 100%); }
+.atm-wood    { --bg: linear-gradient(160deg, oklch(0.45 0.07 50) 0%, oklch(0.25 0.04 42) 65%, oklch(0.16 0.02 40) 100%); }
+.atm-night   { --bg: radial-gradient(at 30% 30%, oklch(0.45 0.10 65) 0%, oklch(0.20 0.04 55) 40%, oklch(0.10 0.01 50) 100%); }
+.atm-stone   { --bg: linear-gradient(150deg, oklch(0.50 0.02 60) 0%, oklch(0.25 0.01 55) 100%); }
+.atm-flour   { --bg: linear-gradient(160deg, oklch(0.88 0.03 80) 0%, oklch(0.70 0.05 70) 60%, oklch(0.40 0.06 45) 100%); }
+.atm-herb    { --bg: linear-gradient(140deg, oklch(0.55 0.07 110) 0%, oklch(0.30 0.04 95) 100%); }
+.atm-clay    { --bg: linear-gradient(150deg, oklch(0.60 0.13 38) 0%, oklch(0.35 0.10 32) 100%); }
+.atm-cream   { --bg: linear-gradient(160deg, oklch(0.94 0.03 80) 0%, oklch(0.78 0.05 70) 100%); }
+
+/* ---------- Sección genérica ---------- */
+section { position: relative; }
+.section {
+  padding: clamp(80px, 12vw, 160px) 0;
+}
+/* Light, warm palette */
+.section--linen   { background-color: oklch(0.95 0.022 80); color: var(--espresso); }
+.section--cream   { background-color: var(--crema); color: var(--espresso); }
+.section--sand    { background-color: oklch(0.90 0.028 75); color: var(--espresso); }
+.section--biscuit { background-color: oklch(0.88 0.035 68); color: var(--espresso); }
+.section--clay-soft { background-color: oklch(0.78 0.06 45); color: var(--espresso); }
+/* Warmer, dimmer accents (no longer near-black) */
+.section--dark    { background-color: oklch(0.36 0.045 42); }
+.section--nogal   { background-color: oklch(0.46 0.055 45); color: var(--crema); }
+.section--espresso{ background-color: oklch(0.30 0.04 40); color: var(--crema); }
+
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 5vw, 80px);
+  align-items: end;
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+.section-head h2 {
+  margin: 14px 0 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.section-head h2 em { font-style: italic; color: var(--terracota-soft); font-weight: 600; }
+.section-head .lede {
+  font-size: 17px;
+  line-height: 1.6;
+  color: oklch(0.94 0.03 80 / 0.85);
+  max-width: 44ch;
+  text-wrap: pretty;
+  font-weight: 400;
+}
+
+/* On wood / dark sections: thicker body weight + subtle text shadow for legibility */
+.wood, .section--nogal, .section--espresso, .section--dark, footer.wood {
+  font-weight: 400;
+}
+.wood h1, .wood h2, .wood h3, .wood h4,
+.section--nogal h1, .section--nogal h2, .section--nogal h3, .section--nogal h4,
+.section--espresso h1, .section--espresso h2, .section--espresso h3, .section--espresso h4 {
+  text-shadow: 0 2px 6px oklch(0.10 0.008 50 / 0.5);
+  font-weight: 700;
+}
+.wood p, .wood li, .wood td,
+.section--nogal p, .section--nogal li, .section--nogal td,
+.section--espresso p, .section--espresso li, .section--espresso td {
+  font-weight: 500;
+  text-shadow: 0 1px 3px oklch(0.10 0.008 50 / 0.4);
+}
+.section--cream .section-head .lede,
+.section--linen .section-head .lede,
+.section--sand .section-head .lede,
+.section--biscuit .section-head .lede,
+.section--clay-soft .section-head .lede { color: oklch(0.30 0.02 40 / 0.8); }
+
+@media (max-width: 820px) {
+  .section-head { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Smoke / ember decoration */
+.ember {
+  position: absolute;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--ambar-glow), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  animation: ember 7s ease-in-out infinite;
+}
+@keyframes ember {
+  0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+  20%  { opacity: 0.7; }
+  100% { transform: translateY(-180px) scale(1.4); opacity: 0; }
+}
+
+/* ---------- Utility ---------- */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, oklch(0.94 0.03 80 / 0.25), transparent);
+  margin: 0;
+  border: none;
+}
+.section--cream .divider,
+.section--linen .divider,
+.section--sand .divider,
+.section--biscuit .divider {
+  background: linear-gradient(90deg, transparent, oklch(0.30 0.02 40 / 0.25), transparent);
+}
+
+.hidden-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
