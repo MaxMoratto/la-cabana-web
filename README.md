@@ -1,6 +1,6 @@
-# La Cabaña Social House — Iztacalco
+# La Cabaña — Restaurante Familiar · Iztacalco
 
-Sitio web del restaurante familiar **La Cabaña Social House** en la colonia Agrícola Oriental, Iztacalco, CDMX. Panadería, cafetería y restaurante con terraza.
+Sitio web del **Restaurante Familiar La Cabaña** en la colonia Agrícola Oriental, Iztacalco, CDMX. Panadería, cafetería y restaurante con terraza.
 
 ## Estructura
 

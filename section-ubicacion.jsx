@@ -93,7 +93,7 @@ function UbicacionSection() {
                     whiteSpace: "nowrap",
                     boxShadow: "0 12px 24px -8px oklch(0.10 0.008 50 / 0.55)",
                   }}>
-                    La Cabaña Social House
+                    La Cabaña
                   </div>
                   <div style={{
                     width: 0, height: 0,

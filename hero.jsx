@@ -74,7 +74,7 @@ function Hero({ onReserve, onMenu, onPromos, onLocation }) {
             fontWeight: 500,
             textShadow: "0 2px 8px oklch(0.10 0.008 50 / 0.7)",
           }}>
-            SOCIAL HOUSE · IZTACALCO
+            RESTAURANTE FAMILIAR · IZTACALCO
           </div>
         </Reveal>
 

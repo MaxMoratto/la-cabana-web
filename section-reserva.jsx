@@ -153,11 +153,11 @@ function ReservaSection({ onToast }) {
           {/* Form card */}
           <Reveal>
             <div style={{
-              background: "oklch(0.94 0.03 80 / 0.45)",
-              border: "1px solid oklch(0.22 0.025 40 / 0.14)",
-              borderRadius: 4,
-              padding: "clamp(28px, 4vw, 44px)",
-              backdropFilter: "blur(6px)",
+              background: "#fdfaf5",
+              border: "1px solid oklch(0.22 0.025 40 / 0.10)",
+              borderRadius: 12,
+              padding: "clamp(28px, 4vw, 48px)",
+              boxShadow: "0 24px 60px -28px oklch(0.22 0.025 40 / 0.25), 0 2px 8px oklch(0.22 0.025 40 / 0.06)",
             }}>
               {/* Steps progress */}
               <div style={{ display: "flex", gap: 10, marginBottom: 32 }}>
@@ -220,14 +220,19 @@ function ReservaSection({ onToast }) {
                         <button key={a.id} type="button" onClick={() => update("area", a.id)}
                           style={{
                             textAlign: "left",
-                            padding: "14px 16px",
-                            border: form.area === a.id ? "1px solid var(--terracota)" : "1px solid oklch(0.22 0.025 40 / 0.14)",
-                            background: form.area === a.id ? "oklch(0.46 0.13 35 / 0.18)" : "transparent",
-                            borderRadius: 4,
+                            padding: "16px 18px",
+                            border: form.area === a.id ? "1.5px solid var(--terracota)" : "1.5px solid oklch(0.22 0.025 40 / 0.16)",
+                            background: form.area === a.id ? "oklch(0.58 0.13 38 / 0.08)" : "#ffffff",
+                            borderRadius: 10,
                             transition: "all 0.2s ease",
-                          }}>
-                          <div style={{ fontFamily: "var(--serif)", fontSize: 17, color: "var(--espresso)" }}>{a.label}</div>
-                          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.14em", color: "oklch(0.22 0.025 40 / 0.6)", marginTop: 6 }}>{a.sub}</div>
+                            cursor: "pointer",
+                            boxShadow: form.area === a.id ? "0 4px 12px oklch(0.58 0.13 38 / 0.15)" : "0 1px 2px oklch(0.22 0.025 40 / 0.04)",
+                          }}
+                          onMouseEnter={(e) => { if (form.area !== a.id) e.currentTarget.style.borderColor = "var(--terracota)"; }}
+                          onMouseLeave={(e) => { if (form.area !== a.id) e.currentTarget.style.borderColor = "oklch(0.22 0.025 40 / 0.16)"; }}
+                        >
+                          <div style={{ fontFamily: "var(--serif)", fontSize: 18, color: "var(--espresso)", fontWeight: 500 }}>{a.label}</div>
+                          <div style={{ fontSize: 12.5, color: "oklch(0.22 0.025 40 / 0.65)", marginTop: 6 }}>{a.sub}</div>
                         </button>
                       ))}
                     </div>
@@ -380,33 +385,49 @@ function ReservaSection({ onToast }) {
 /* ---------- Form atoms ---------- */
 function Field({ label, error, children }) {
   return (
-    <label style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-      <span style={{ fontFamily: "var(--mono)", fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase", color: error ? "oklch(0.62 0.17 25)" : "oklch(0.22 0.025 40 / 0.65)" }}>
-        {label}{error && " · " + error}
+    <label style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <span style={{
+        fontFamily: "var(--sans)",
+        fontSize: 13,
+        fontWeight: 600,
+        letterSpacing: "0.02em",
+        color: error ? "oklch(0.55 0.17 25)" : "var(--espresso)",
+      }}>
+        {label}{error && <span style={{ fontWeight: 400, marginLeft: 8 }}> · {error}</span>}
       </span>
       {children}
     </label>
   );
 }
 const inputBase = {
-  background: "oklch(0.94 0.03 80 / 0.4)",
-  border: "1px solid oklch(0.22 0.025 40 / 0.14)",
+  background: "#ffffff",
+  border: "1.5px solid oklch(0.22 0.025 40 / 0.18)",
   color: "var(--espresso)",
   fontFamily: "var(--sans)",
-  fontSize: 15,
-  padding: "13px 14px",
-  borderRadius: 4,
+  fontSize: 16,
+  padding: "14px 16px",
+  borderRadius: 8,
   outline: "none",
   width: "100%",
-  transition: "border-color 0.2s ease, background 0.2s ease",
+  boxSizing: "border-box",
+  transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+  boxShadow: "0 1px 2px oklch(0.22 0.025 40 / 0.04)",
+};
+const inputFocus = (e) => {
+  e.target.style.borderColor = "var(--terracota)";
+  e.target.style.boxShadow = "0 0 0 4px oklch(0.58 0.13 38 / 0.12)";
+};
+const inputBlur = (e) => {
+  e.target.style.borderColor = "oklch(0.22 0.025 40 / 0.18)";
+  e.target.style.boxShadow = "0 1px 2px oklch(0.22 0.025 40 / 0.04)";
 };
 function Input({ value, onChange, placeholder, type = "text", min, max }) {
   return (
     <input
       type={type} value={value} placeholder={placeholder} min={min} max={max}
       onChange={(e) => onChange(e.target.value)}
-      onFocus={(e) => { e.target.style.borderColor = "var(--terracota)"; }}
-      onBlur={(e) => { e.target.style.borderColor = "oklch(0.22 0.025 40 / 0.14)"; }}
+      onFocus={inputFocus}
+      onBlur={inputBlur}
       style={inputBase}
     />
   );
@@ -416,8 +437,8 @@ function Textarea({ value, onChange, placeholder }) {
     <textarea
       value={value} placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}
-      onFocus={(e) => { e.target.style.borderColor = "var(--terracota)"; }}
-      onBlur={(e) => { e.target.style.borderColor = "oklch(0.22 0.025 40 / 0.14)"; }}
+      onFocus={inputFocus}
+      onBlur={inputBlur}
       rows={3}
       style={{ ...inputBase, resize: "vertical", fontFamily: "var(--sans)" }}
     />
@@ -428,15 +449,16 @@ function Select({ value, onChange, children, placeholder }) {
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      onFocus={(e) => { e.target.style.borderColor = "var(--terracota)"; }}
-      onBlur={(e) => { e.target.style.borderColor = "oklch(0.22 0.025 40 / 0.14)"; }}
+      onFocus={inputFocus}
+      onBlur={inputBlur}
       style={{
         ...inputBase,
         appearance: "none",
-        backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1 L6 6 L11 1' stroke='%23E8D9C0' stroke-width='1.4' fill='none' stroke-linecap='round'/></svg>\")",
+        cursor: "pointer",
+        backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1 L6 6 L11 1' stroke='%23B8553A' stroke-width='1.8' fill='none' stroke-linecap='round'/></svg>\")",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "right 14px center",
-        paddingRight: 36,
+        paddingRight: 40,
       }}
     >
       <option value="" disabled>{placeholder || "—"}</option>
@@ -445,34 +467,68 @@ function Select({ value, onChange, children, placeholder }) {
   );
 }
 function Stepper({ value, onChange, min, max }) {
+  const setNum = (v) => {
+    const n = parseInt(v, 10);
+    if (isNaN(n)) { onChange(min); return; }
+    onChange(Math.max(min, Math.min(max, n)));
+  };
+  const btn = (label, onClick, disabled) => (
+    <button type="button" onClick={onClick} disabled={disabled}
+      style={{
+        width: 44, height: 44,
+        borderRadius: 6,
+        color: disabled ? "oklch(0.22 0.025 40 / 0.25)" : "var(--terracota)",
+        fontSize: 22, fontWeight: 600,
+        background: disabled ? "transparent" : "oklch(0.94 0.03 80 / 0.6)",
+        cursor: disabled ? "not-allowed" : "pointer",
+        transition: "background 0.15s ease",
+      }}>{label}</button>
+  );
   return (
     <div style={{
       display: "flex", alignItems: "center",
       ...inputBase,
-      padding: "4px",
+      padding: "3px 6px",
     }}>
-      <button type="button" onClick={() => onChange(Math.max(min, value - 1))}
-        style={{ width: 38, height: 38, borderRadius: 4, color: "var(--espresso)" }}>−</button>
-      <div style={{ flex: 1, textAlign: "center", fontFamily: "var(--serif)", fontSize: 18 }}>{value}</div>
-      <button type="button" onClick={() => onChange(Math.min(max, value + 1))}
-        style={{ width: 38, height: 38, borderRadius: 4, color: "var(--espresso)" }}>+</button>
+      {btn("−", () => onChange(Math.max(min, value - 1)), value <= min)}
+      <input
+        type="number"
+        min={min} max={max}
+        value={value}
+        onChange={(e) => setNum(e.target.value)}
+        style={{
+          flex: 1, textAlign: "center",
+          fontFamily: "var(--serif)", fontSize: 20,
+          color: "var(--espresso)",
+          border: "none", outline: "none", background: "transparent",
+          padding: 0, width: 40,
+          MozAppearance: "textfield",
+        }}
+      />
+      {btn("+", () => onChange(Math.min(max, value + 1)), value >= max)}
     </div>
   );
 }
 function Chip({ active, onClick, children }) {
   return (
     <button type="button" onClick={onClick} style={{
-      padding: "13px 16px",
+      padding: "14px 18px",
       borderRadius: 999,
-      border: active ? "1px solid var(--terracota)" : "1px solid oklch(0.22 0.025 40 / 0.16)",
-      background: active ? "oklch(0.46 0.13 35 / 0.22)" : "transparent",
-      color: active ? "var(--crema)" : "oklch(0.22 0.025 40 / 0.8)",
+      border: active ? "1.5px solid var(--terracota)" : "1.5px solid oklch(0.22 0.025 40 / 0.18)",
+      background: active ? "var(--terracota)" : "#ffffff",
+      color: active ? "var(--crema)" : "var(--espresso)",
       fontFamily: "var(--sans)",
-      fontSize: 13.5,
+      fontSize: 14,
+      fontWeight: active ? 600 : 500,
       letterSpacing: "0.02em",
       transition: "all 0.2s ease",
       textAlign: "center",
-    }}>
+      cursor: "pointer",
+      boxShadow: active ? "0 4px 12px oklch(0.58 0.13 38 / 0.25)" : "0 1px 2px oklch(0.22 0.025 40 / 0.04)",
+    }}
+      onMouseEnter={(e) => { if (!active) { e.currentTarget.style.borderColor = "var(--terracota)"; e.currentTarget.style.color = "var(--terracota)"; } }}
+      onMouseLeave={(e) => { if (!active) { e.currentTarget.style.borderColor = "oklch(0.22 0.025 40 / 0.18)"; e.currentTarget.style.color = "var(--espresso)"; } }}
+    >
       {children}
     </button>
   );

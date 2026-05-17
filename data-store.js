@@ -14,7 +14,7 @@
   /* ---------- Initial seed (current site content) ---------- */
   const SEED = {
     site: {
-      name: "La Cabaña Social House",
+      name: "La Cabaña Restaurante Familiar",
       tagline: "Panadería, cafetería y restaurante con terraza",
       district: "Iztacalco",
       phone: "+525574558166",

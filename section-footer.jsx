@@ -167,7 +167,7 @@ function Footer() {
           gap: 16,
         }}>
           <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.18em", color: "oklch(0.94 0.03 80 / 0.45)" }}>
-            © 2026 La Cabaña Social House · Hecho en Iztacalco, CDMX
+            © 2026 La Cabaña · Restaurante Familiar · Hecho en Iztacalco, CDMX
           </div>
           <div style={{ display: "flex", gap: 22, alignItems: "center", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.16em", color: "oklch(0.94 0.03 80 / 0.45)" }}>
             <a href="#" style={{ color: "inherit" }}>Aviso de privacidad</a>

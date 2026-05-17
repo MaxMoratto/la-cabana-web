@@ -41,7 +41,7 @@ function Logo({ size = 44, light = true }) {
           color: light ? "oklch(0.94 0.03 80 / 0.55)" : "oklch(0.22 0.025 40 / 0.6)",
           marginTop: 4,
         }}>
-          Social House · Iztacalco
+          Restaurante Familiar · Iztacalco
         </div>
       </div>
     </div>
