@@ -303,7 +303,7 @@ function ReservaSection({ onToast }) {
                     Reservación por WhatsApp
                   </div>
                   <div style={{ fontFamily: "var(--serif)", fontSize: 22, marginTop: 6 }}>
-                    +52 55 5115 7248
+                    {LaCabanaStore.getPath("site.phoneDisplay") || "+52 55 7455 8166"}
                   </div>
                 </div>
                 <Arrow />

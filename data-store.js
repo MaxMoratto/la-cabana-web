@@ -7,8 +7,8 @@
    ============================================================ */
 
 (function () {
-  const KEY = "lacabana_content_v1";
-  const IMG_KEY = "lacabana_images_v1";
+  const KEY = "lacabana_content_v2";
+  const IMG_KEY = "lacabana_images_v2";
   const listeners = new Set();
 
   /* ---------- Initial seed (current site content) ---------- */
@@ -17,9 +17,9 @@
       name: "La Cabaña Social House",
       tagline: "Panadería, cafetería y restaurante con terraza",
       district: "Iztacalco",
-      phone: "+525551157248",
-      phoneDisplay: "+52 55 5115 7248",
-      whatsapp: "5215551157248",
+      phone: "+525574558166",
+      phoneDisplay: "+52 55 7455 8166",
+      whatsapp: "525574558166",
       address: "Sur 16 Núm. 233, Col. Agrícola Oriental, Iztacalco, 08500 CDMX",
       addressShort: "Sur 16 · Col. Agrícola Oriental",
       reference: "Frente al Mercado Agrícola Oriental",
@@ -58,27 +58,27 @@
         },
         {
           id: "antojitos", n: "02", name: "Antojitos Mexicanos",
-          atm: "clay", image: "", imagePosition: "center",
+          atm: "clay", image: "images/tlacoyos-comal.png", imagePosition: "center",
           items: ["Tlacoyos de haba y requesón", "Quesadillas de flor de calabaza", "Sopes de cuitlacoche", "Tetelas de frijol"],
         },
         {
           id: "panaderia", n: "03", name: "Panadería Abierta",
-          atm: "flour", image: "", imagePosition: "center",
+          atm: "flour", image: "images/conchas-artesanales.png", imagePosition: "center",
           items: ["Conchas tibias de vainilla y cacao", "Rol de canela con piloncillo", "Cochinitos de jengibre", "Pan rústico de masa madre"],
         },
         {
           id: "postres", n: "04", name: "Postres Artesanales",
-          atm: "cream", image: "", imagePosition: "center",
+          atm: "cream", image: "images/postres-artesanales.png", imagePosition: "center",
           items: ["Flan de cajeta tibio", "Buñuelos con miel de piloncillo", "Capirotada con queso añejo", "Helado de mamey con pinole"],
         },
         {
           id: "olla", n: "05", name: "Café de Olla y Atoles",
-          atm: "wood", image: "", imagePosition: "center",
+          atm: "wood", image: "images/cafe-olla.png", imagePosition: "center",
           items: ["Café de olla con canela y piloncillo", "Atole de guayaba", "Atole champurrado", "Té de hierbabuena del huerto"],
         },
         {
           id: "chocolate", n: "06", name: "Chocolate Caliente",
-          atm: "night", image: "", imagePosition: "center",
+          atm: "night", image: "images/chocolate-oaxaqueno.png", imagePosition: "center",
           items: ["Chocolate de metate de Oaxaca", "Champurrado de maíz azul", "Chocolate blanco con tequila", "Marshmallows de mezcal"],
         },
       ],
@@ -159,27 +159,27 @@
       ],
     },
     promos: [
-      { id: "promo_chiles",   image: "", title: "Temporada de Chiles en Nogada", subtitle: "Poblano · nuez de castilla · granada de Zacatlán", desc: "Por seis semanas al año, traemos las nueces frescas y los chiles de Calpan. Se preparan a mano cada tarde, en lotes de 24.", dates: "Sep — Oct", price: "$ 385", badge: "Edición limitada" },
-      { id: "promo_buffet",   image: "", title: "Buffet Familiar de Fin de Semana", subtitle: "6 estaciones · parrilla en vivo · panadería abierta", desc: "Café de olla recién hervido, parrilla a la vista, panadería con masa madre y mesa de antojitos. Niños hasta 6 años, cortesía.", dates: "Sábado y Domingo", price: "$ 545 / persona", badge: "Más popular" },
-      { id: "promo_pozole",   image: "", title: "Pozole Patrio · Tres Olores", subtitle: "Rojo de Guerrero · verde de Puebla · blanco de Jalisco", desc: "Cazuelas de barro recién destapadas, tostadas de maíz azul, lechuga finísima y aguacate. Servido como en casa de la abuela.", dates: "Septiembre", price: "$ 295", badge: "Mes patrio" },
-      { id: "promo_muerto",   image: "", title: "Pan de Muerto Artesanal", subtitle: "Masa madre · ralladura de naranja · azahar", desc: "Reposamos la masa 18 horas. Se hornea a leña a primera hora. Lo entregamos tibio, espolvoreado a mano frente al cliente.", dates: "Octubre — Noviembre", price: "$ 95 / pieza", badge: "Horno a leña" },
-      { id: "promo_rosca",    image: "", title: "Rosca de Reyes Premium", subtitle: "Ate de membrillo · higo · acitrón · 1.2 kg", desc: "Se decora a mano una por una. Incluye chocolate de olla servido en cazuela individual para acompañar.", dates: "Enero", price: "Desde $ 690", badge: "Pre-venta" },
-      { id: "promo_desayuno", image: "", title: "Desayunos Buffet Familiares", subtitle: "Chilaquiles a elegir · barra de fruta · panadería", desc: "Abrimos el comal a las 8:00. Salsas martajadas frente al cliente, café de olla sin fondo y conchas recién horneadas.", dates: "Todos los días", price: "$ 325 / persona", badge: "8:00 — 12:30" },
+      { id: "promo_chiles",   image: "images/chiles-nogada.png",    title: "Temporada de Chiles en Nogada", subtitle: "Poblano · nuez de castilla · granada de Zacatlán", desc: "Por seis semanas al año, traemos las nueces frescas y los chiles de Calpan. Se preparan a mano cada tarde, en lotes de 24.", dates: "Sep — Oct", price: "$ 385", badge: "Edición limitada" },
+      { id: "promo_buffet",   image: "images/buffet-dominical.png", title: "Buffet Familiar de Fin de Semana", subtitle: "6 estaciones · parrilla en vivo · panadería abierta", desc: "Café de olla recién hervido, parrilla a la vista, panadería con masa madre y mesa de antojitos. Niños hasta 6 años, cortesía.", dates: "Sábado y Domingo", price: "$ 545 / persona", badge: "Más popular" },
+      { id: "promo_pozole",   image: "images/pozole-cazuela.png",   title: "Pozole Patrio · Tres Olores", subtitle: "Rojo de Guerrero · verde de Puebla · blanco de Jalisco", desc: "Cazuelas de barro recién destapadas, tostadas de maíz azul, lechuga finísima y aguacate. Servido como en casa de la abuela.", dates: "Septiembre", price: "$ 295", badge: "Mes patrio" },
+      { id: "promo_muerto",   image: "images/pan-muerto.png",       title: "Pan de Muerto Artesanal", subtitle: "Masa madre · ralladura de naranja · azahar", desc: "Reposamos la masa 18 horas. Se hornea a leña a primera hora. Lo entregamos tibio, espolvoreado a mano frente al cliente.", dates: "Octubre — Noviembre", price: "$ 95 / pieza", badge: "Horno a leña" },
+      { id: "promo_rosca",    image: "images/rosca-reyes.png",      title: "Rosca de Reyes Premium", subtitle: "Ate de membrillo · higo · acitrón · 1.2 kg", desc: "Se decora a mano una por una. Incluye chocolate de olla servido en cazuela individual para acompañar.", dates: "Enero", price: "Desde $ 690", badge: "Pre-venta" },
+      { id: "promo_desayuno", image: "images/desayuno-familiar.png",title: "Desayunos Buffet Familiares", subtitle: "Chilaquiles a elegir · barra de fruta · panadería", desc: "Abrimos el comal a las 8:00. Salsas martajadas frente al cliente, café de olla sin fondo y conchas recién horneadas.", dates: "Todos los días", price: "$ 325 / persona", badge: "8:00 — 12:30" },
     ],
     panaderia: [
-      { id: "pan_1", image: "", name: "Concha Premium",      price: 38, desc: "Vainilla de Papantla · cacao" },
-      { id: "pan_2", image: "", name: "Chocolatín Mexicano", price: 52, desc: "Chocolate Oaxaqueño · mantequilla" },
-      { id: "pan_3", image: "", name: "Rol de Canela",       price: 48, desc: "Piloncillo · nuez de castilla" },
-      { id: "pan_4", image: "", name: "Pan Rústico",         price: 95, desc: "Masa madre 36 hrs · corteza leñosa" },
-      { id: "pan_5", image: "", name: "Cuerno de Hojaldre",  price: 62, desc: "104 capas · mantequilla francesa" },
-      { id: "pan_6", image: "", name: "Pan de Elote",        price: 45, desc: "Elote tierno · queso fresco" },
+      { id: "pan_1", image: "images/conchas-artesanales.png", name: "Concha Premium",      price: 38, desc: "Vainilla de Papantla · cacao" },
+      { id: "pan_2", image: "images/chocolatin-capas.png",    name: "Chocolatín Mexicano", price: 52, desc: "Chocolate Oaxaqueño · mantequilla" },
+      { id: "pan_3", image: "images/rol-canela.png",          name: "Rol de Canela",       price: 48, desc: "Piloncillo · nuez de castilla" },
+      { id: "pan_4", image: "images/pan-rustico.png",         name: "Pan Rústico",         price: 95, desc: "Masa madre 36 hrs · corteza leñosa" },
+      { id: "pan_5", image: "images/cuerno-hojaldre.png",     name: "Cuerno de Hojaldre",  price: 62, desc: "104 capas · mantequilla francesa" },
+      { id: "pan_6", image: "images/pan-elote.png",           name: "Pan de Elote",        price: 45, desc: "Elote tierno · queso fresco" },
     ],
     eventos: [
-      { id: "ev_1", image: "", title: "Trío Los del Valle",      day: "Viernes",    time: "20:00 — 23:00", desc: "Boleros y rancheras al fogón" },
-      { id: "ev_2", image: "", title: "Mariachi de Cocula",      day: "Sábado",     time: "14:00 — 17:00", desc: "Buffet familiar de fin de semana" },
-      { id: "ev_3", image: "", title: "Cuenta-cuentos infantil", day: "Domingo",    time: "12:00 — 14:00", desc: "Leyendas mexicanas para niños" },
-      { id: "ev_4", image: "", title: "Cata de mezcal",          day: "Miércoles",  time: "19:30 — 22:00", desc: "5 destilados de Oaxaca · cupo 24" },
-      { id: "ev_5", image: "", title: "Cumpleaños familiar",     day: "Sábado",     time: "Todo el día",   desc: "Decoración papel picado · pastel" },
+      { id: "ev_1", image: "images/musica-vivo.png",   title: "Trío Los del Valle",      day: "Viernes",    time: "20:00 — 23:00", desc: "Boleros y rancheras al fogón" },
+      { id: "ev_2", image: "images/musica-vivo.png",   title: "Mariachi de Cocula",      day: "Sábado",     time: "14:00 — 17:00", desc: "Buffet familiar de fin de semana" },
+      { id: "ev_3", image: "",                          title: "Cuenta-cuentos infantil", day: "Domingo",    time: "12:00 — 14:00", desc: "Leyendas mexicanas para niños" },
+      { id: "ev_4", image: "",                          title: "Cata de mezcal",          day: "Miércoles",  time: "19:30 — 22:00", desc: "5 destilados de Oaxaca · cupo 24" },
+      { id: "ev_5", image: "",                          title: "Cumpleaños familiar",     day: "Sábado",     time: "Todo el día",   desc: "Decoración papel picado · pastel" },
     ],
     takeout: { enabled: false, items: [] },
   };

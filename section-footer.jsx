@@ -1,10 +1,12 @@
-/* global React, Reveal, Eyebrow, Arrow, Logo */
+/* global React, Reveal, Eyebrow, Arrow, Logo, useStoreSlice */
 
 /* ============================================================
    FOOTER
    ============================================================ */
 
 function Footer() {
+  const site = useStoreSlice("site", {});
+  const phoneDisplay = site.phoneDisplay || "+52 55 7455 8166";
   return (
     <footer style={{
       color: "var(--crema)",
@@ -116,7 +118,7 @@ function Footer() {
               </div>
               <div style={{ lineHeight: 1.85, fontSize: 14, color: "oklch(0.94 0.03 80 / 0.78)" }}>
                 <div style={{ fontFamily: "var(--serif)", fontSize: 20, color: "var(--crema)", marginBottom: 8 }}>
-                  +52 55 5115 7248
+                  {phoneDisplay}
                 </div>
                 Sur 16 Núm. 233<br/>
                 Col. Agrícola Oriental<br/>
@@ -167,9 +169,30 @@ function Footer() {
           <div style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.18em", color: "oklch(0.94 0.03 80 / 0.45)" }}>
             © 2026 La Cabaña Social House · Hecho en Iztacalco, CDMX
           </div>
-          <div style={{ display: "flex", gap: 22, fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.16em", color: "oklch(0.94 0.03 80 / 0.45)" }}>
+          <div style={{ display: "flex", gap: 22, alignItems: "center", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.16em", color: "oklch(0.94 0.03 80 / 0.45)" }}>
             <a href="#" style={{ color: "inherit" }}>Aviso de privacidad</a>
             <a href="#" style={{ color: "inherit" }}>Términos</a>
+            <a href="https://www.maxmx.ai/" target="_blank" rel="noopener noreferrer" style={{ color: "inherit" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--terracota-soft)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "inherit")}
+            >
+              Diseñado por MaxMx.ai
+            </a>
+            <a href="?admin=1" aria-label="Admin" title="Panel administrativo"
+              style={{
+                display: "inline-flex", alignItems: "center", justifyContent: "center",
+                width: 28, height: 28, borderRadius: 999,
+                color: "oklch(0.94 0.03 80 / 0.35)",
+                transition: "color 0.2s ease, transform 0.4s ease",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "var(--terracota-soft)"; e.currentTarget.style.transform = "rotate(60deg)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "oklch(0.94 0.03 80 / 0.35)"; e.currentTarget.style.transform = "none"; }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
